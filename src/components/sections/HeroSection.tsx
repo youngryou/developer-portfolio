@@ -1,6 +1,13 @@
 'use client'
 
 import { useState, useEffect } from 'react'
+import {
+  TbBrandGithubFilled,
+  TbBrandLinkedinFilled,
+  TbFileCvFilled,
+  TbMailFilled,
+} from 'react-icons/tb'
+import { Button } from '../common/Button'
 
 const SEQUENCES = [
   'A Full-Stack Developer engineering the entire application.',
@@ -31,17 +38,54 @@ export const HeroSection = () => {
   }, [currentText, sequenceIndex])
 
   return (
-    <section className="py-36 text-center">
-      <h3 className="text-2xl md:text-3xl font-bold mb-6">
-        Kia Ora, My name is{' '}
-      </h3>
-      <h2 className="text-4xl md:text-5xl font-bold mb-6">
-        <span className="text-accent-green">Young</span>.
-      </h2>
-      <p className="text-lg md:text-xl max-w-3xl mx-auto text-text-sub leading-relaxed min-h-9 md:min-h-10">
-        {currentText}
-        <span className="animate-blink border-r-2 ml-1" />
-      </p>
+    <section className="py-18 text-center">
+      <div className="flex items-center justify-center gap-2 mb-8">
+        <Button
+          variant="link"
+          label="GitHub"
+          icon={TbBrandGithubFilled}
+          href="https://github.com/youngryou"
+          hoverColorClass="group-hover:text-accent-green"
+        />
+        <span className="text-text-hint/30 font-mono text-xs">|</span>
+        <Button
+          variant="link"
+          label="LinkedIn"
+          icon={TbBrandLinkedinFilled}
+          href="https://www.linkedin.com/in/young-ryou/"
+          hoverColorClass="group-hover:text-accent-blue"
+        />
+      </div>
+
+      <div>
+        <h3 className="text-2xl md:text-3xl font-bold mb-4">
+          Kia Ora, My name is{' '}
+        </h3>
+        <h2 className="text-4xl md:text-5xl font-bold mb-8">
+          <span className="text-accent-green">Young</span>.
+        </h2>
+
+        <p className="text-lg md:text-xl max-w-3xl mx-auto text-text-sub leading-relaxed min-h-9 md:min-h-10">
+          {currentText}
+          <span className="animate-blink border-r-2 ml-1" />
+        </p>
+      </div>
+
+      <div className="flex flex-wrap items-center justify-center gap-4 mt-12">
+        <Button
+          variant="primary"
+          label="View My CV"
+          icon={TbFileCvFilled}
+          href="https://youngryou.github.io/developer-resume/"
+        />
+        <Button
+          variant="outline"
+          label="Contact Me"
+          icon={TbMailFilled}
+          // onClick={}
+          // hoverColorClass="group-hover:text-accent-yellow"
+        />
+      </div>
     </section>
   )
 }
