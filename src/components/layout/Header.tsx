@@ -2,7 +2,7 @@ import Logo from '../common/Logo'
 
 export const Header = () => {
   return (
-    <header className="px-8 py-6 border-b border-border-editor">
+    <header className="px-8 py-6">
       <nav className="flex justify-between items-center max-w-5xl mx-auto">
         <Logo />
 

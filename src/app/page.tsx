@@ -1,7 +1,9 @@
+import { HeroSection } from '@/components/sections/HeroSection'
+
 export default function Home() {
   return (
     <main>
-      <h1>Young Ryou Portfolio</h1>
+      <HeroSection />
     </main>
   )
 }
