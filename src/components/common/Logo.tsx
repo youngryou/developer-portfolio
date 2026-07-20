@@ -8,7 +8,7 @@ export default function Logo({ className = '' }: LogoProps) {
   return (
     <Link
       href="/"
-      className={`flex items-center font-mono text-2xl font-medium tracking-tight select-none cursor-pointer ${className}`}
+      className={`flex items-center font-mono text-xl md:text-2xl font-medium tracking-tight select-none cursor-pointer ${className}`}
     >
       <span className="text-accent-green mr-2 font-bold">&gt;</span>
 
@@ -16,7 +16,7 @@ export default function Logo({ className = '' }: LogoProps) {
         Young Ryou
       </span>
 
-      <span className="text-text-hint ml-1.5 font-light text-sm">
+      <span className="text-text-hint ml-1.5 font-light text-xs md:text-sm">
         Portfolio
       </span>
 

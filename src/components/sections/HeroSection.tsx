@@ -38,7 +38,7 @@ export const HeroSection = () => {
   }, [currentText, sequenceIndex])
 
   return (
-    <section className="py-18 text-center">
+    <section className="pt-24 md:pt-36 pb-24 text-center">
       <div className="flex items-center justify-center gap-2 mb-8">
         <Button
           variant="link"
@@ -65,13 +65,13 @@ export const HeroSection = () => {
           <span className="text-accent-green">Young</span>.
         </h2>
 
-        <p className="text-lg md:text-xl max-w-3xl mx-auto text-text-sub leading-relaxed min-h-9 md:min-h-10">
+        <p className="text-lg md:text-xl max-w-3xl mx-auto text-text-sub leading-relaxed min-h-16 md:min-h-10 px-12">
           {currentText}
           <span className="animate-blink border-r-2 ml-1" />
         </p>
       </div>
 
-      <div className="flex flex-wrap items-center justify-center gap-4 mt-12">
+      <div className="flex flex-wrap items-center justify-center gap-4 mt-8 md:mt-12">
         <Button
           variant="primary"
           label="View My CV"
