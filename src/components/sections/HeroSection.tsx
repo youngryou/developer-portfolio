@@ -1,13 +1,9 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import {
-  TbBrandGithubFilled,
-  TbBrandLinkedinFilled,
-  TbFileCvFilled,
-  TbMailFilled,
-} from 'react-icons/tb'
+import { TbFileCvFilled, TbMailFilled } from 'react-icons/tb'
 import { Button } from '../common/Button'
+import { SocialGroup } from '../common/SocialGroup'
 
 const SEQUENCES = [
   'A Full-Stack Developer engineering the entire application.',
@@ -39,23 +35,7 @@ export const HeroSection = () => {
 
   return (
     <section className="pt-24 md:pt-36 pb-24 text-center">
-      <div className="flex items-center justify-center gap-2 mb-8">
-        <Button
-          variant="link"
-          label="GitHub"
-          icon={TbBrandGithubFilled}
-          href="https://github.com/youngryou"
-          hoverColorClass="group-hover:text-accent-green"
-        />
-        <span className="text-text-hint/30 font-mono text-xs">|</span>
-        <Button
-          variant="link"
-          label="LinkedIn"
-          icon={TbBrandLinkedinFilled}
-          href="https://www.linkedin.com/in/young-ryou/"
-          hoverColorClass="group-hover:text-accent-blue"
-        />
-      </div>
+      <SocialGroup className="mb-8" />
 
       <div>
         <h3 className="text-2xl md:text-3xl font-bold mb-4">

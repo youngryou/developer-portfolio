@@ -1,14 +1,9 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import {
-  TbBrandGithubFilled,
-  TbBrandLinkedinFilled,
-  TbMenu2,
-  TbX,
-} from 'react-icons/tb'
+import { TbMenu2, TbX } from 'react-icons/tb'
 import Logo from '../common/Logo'
-import { Button } from '../common/Button'
+import { SocialGroup } from '../common/SocialGroup'
 
 export const Header = () => {
   const [isOpen, setIsOpen] = useState(false)
@@ -101,23 +96,7 @@ export const Header = () => {
           ))}
         </ul>
 
-        <div className="flex items-center justify-center gap-2 mt-8">
-          <Button
-            variant="link"
-            label="GitHub"
-            icon={TbBrandGithubFilled}
-            href="https://github.com/youngryou"
-            hoverColorClass="group-hover:text-accent-green"
-          />
-          <span className="text-text-hint/30 font-mono text-xs">|</span>
-          <Button
-            variant="link"
-            label="LinkedIn"
-            icon={TbBrandLinkedinFilled}
-            href="https://www.linkedin.com/in/young-ryou/"
-            hoverColorClass="group-hover:text-accent-blue"
-          />
-        </div>
+        <SocialGroup className="mt-8" />
       </div>
     </>
   )
