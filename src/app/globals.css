@@ -6,7 +6,7 @@
   --text-sub: #88949e;
   --text-hint: #6a7282;
   --accent-green: #59da82;
-  --accent-blue: #4c8fcd;
+  --accent-blue: #4eaaff;
   --accent-yellow: #e3d700;
   --border-color: #333333;
 }
@@ -24,6 +24,11 @@
   --font-mono:
     ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono',
     'Courier New', monospace;
+
+  --shadow-editor-card:
+    0 30px 60px -5px rgba(0, 0, 0, 0.6),
+    0 12px 0 -6px rgba(255, 255, 255, 0.05),
+    0 24px 0 -12px rgba(255, 255, 255, 0.03);
 
   --animate-blink: cursor-blink 1s step-end infinite;
   --animate-typing: typing 3.5s steps(25) infinite alternate;
