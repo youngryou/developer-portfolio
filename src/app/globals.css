@@ -3,43 +3,123 @@
 :root {
   --bg-color: #191a1b;
   --text-color: #d4d4d4;
+  --text-sub: #88949e;
   --text-hint: #6a7282;
   --accent-green: #59da82;
-  --accent-blue: #4c8fcd;
-  --accent-yellow: #e3d700;
+  --accent-blue: #4eaaff;
+  --accent-yellow: #f49d00;
+  --accent-purple: #b700ff;
   --border-color: #333333;
 }
 
 @theme {
   --color-bg-editor: var(--bg-color);
   --color-text-editor: var(--text-color);
+  --color-text-sub: var(--text-sub);
   --color-text-hint: var(--text-hint);
   --color-accent-green: var(--accent-green);
   --color-accent-blue: var(--accent-blue);
   --color-accent-yellow: var(--accent-yellow);
+  --color-accent-purple: var(--accent-purple);
   --color-border-editor: var(--border-color);
 
   --font-mono:
     ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono',
     'Courier New', monospace;
 
+  --shadow-editor-card:
+    0 30px 60px -5px rgba(0, 0, 0, 0.6),
+    0 12px 0 -6px rgba(255, 255, 255, 0.05),
+    0 24px 0 -12px rgba(255, 255, 255, 0.03);
+
   --animate-blink: cursor-blink 1s step-end infinite;
+  --animate-typing: typing 3.5s steps(25) infinite alternate;
 
   @keyframes cursor-blink {
     0%,
     100% {
-      opacity: 1;
+      color: var(--color-accent-green);
     }
     50% {
-      opacity: 0;
+      color: transparent;
+    }
+  }
+
+  @keyframes typing {
+    from {
+      width: 0;
+    }
+    to {
+      width: 100%;
     }
   }
 }
 
 body {
+  position: relative;
+
   background-color: var(--bg-color);
+  background-image:
+    linear-gradient(to right, rgba(212, 212, 212, 0.02) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(212, 212, 212, 0.02) 1px, transparent 1px);
+  background-size: 40px 40px;
+  background-attachment: fixed;
+  overflow-x: hidden;
+
   color: var(--text-color);
   font-family: var(--font-mono);
+}
+
+body::before {
+  content: '';
+  position: fixed;
+  top: 15%;
+  left: 10%;
+  width: 45vw;
+  height: 45vw;
+  max-width: 600px;
+  border-radius: 50%;
+  background-color: var(--color-accent-green);
+  opacity: 0.04;
+  filter: blur(120px);
+  pointer-events: none;
+  z-index: -1;
+  animation: float-glow-1 25s ease-in-out infinite alternate;
+}
+
+body::after {
+  content: '';
+  position: fixed;
+  bottom: 15%;
+  right: 10%;
+  width: 50vw;
+  height: 50vw;
+  max-width: 700px;
+  border-radius: 50%;
+  background-color: var(--color-accent-blue);
+  opacity: 0.04;
+  filter: blur(140px);
+  pointer-events: none;
+  z-index: -1;
+  animation: float-glow-2 30s ease-in-out infinite alternate;
+}
+
+@keyframes float-glow-1 {
+  0% {
+    transform: translate(0, 0) scale(1);
+  }
+  100% {
+    transform: translate(8vw, 5vh) scale(1.1);
+  }
+}
+
+@keyframes float-glow-2 {
+  0% {
+    transform: translate(0, 0) scale(1.1);
+  }
+  100% {
+    transform: translate(-6vw, -8vh) scale(0.9);
+  }
 }
 
 html {

@@ -1,14 +1,23 @@
+'use client'
+
 import Link from 'next/link'
+import { useScrollToTop } from '@/hooks/useScrollToTop'
 
 interface LogoProps {
   className?: string
 }
 
 export default function Logo({ className = '' }: LogoProps) {
+  const scrollToTop = useScrollToTop()
+
   return (
     <Link
       href="/"
-      className={`flex items-center font-mono text-2xl font-medium tracking-tight select-none cursor-pointer ${className}`}
+      onClick={(e) => {
+        e.preventDefault()
+        scrollToTop()
+      }}
+      className={`flex items-center font-mono text-xl md:text-2xl font-medium tracking-tight select-none cursor-pointer ${className}`}
     >
       <span className="text-accent-green mr-2 font-bold">&gt;</span>
 
@@ -16,7 +25,7 @@ export default function Logo({ className = '' }: LogoProps) {
         Young Ryou
       </span>
 
-      <span className="text-text-hint ml-1.5 font-light text-sm">
+      <span className="text-text-hint ml-1.5 font-light text-xs md:text-sm">
         Portfolio
       </span>
 
