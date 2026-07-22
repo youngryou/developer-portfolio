@@ -7,7 +7,8 @@
   --text-hint: #6a7282;
   --accent-green: #59da82;
   --accent-blue: #4eaaff;
-  --accent-yellow: #e3d700;
+  --accent-yellow: #f49d00;
+  --accent-purple: #b700ff;
   --border-color: #333333;
 }
 
@@ -19,6 +20,7 @@
   --color-accent-green: var(--accent-green);
   --color-accent-blue: var(--accent-blue);
   --color-accent-yellow: var(--accent-yellow);
+  --color-accent-purple: var(--accent-purple);
   --color-border-editor: var(--border-color);
 
   --font-mono:
