@@ -1,19 +1,22 @@
 import { ReactNode } from 'react'
+import { IoInformationCircleOutline } from 'react-icons/io5'
 
 type CardProps = {
   title: string
   description: string
-  icon: ReactNode
+  icon?: ReactNode
   iconColor?: string
   hoverColor?: string
+  children?: ReactNode
 }
 
 export const Card = ({
   title,
   description,
-  icon,
+  icon = <IoInformationCircleOutline />,
   iconColor = 'text-accent-blue',
   hoverColor = 'hover:border-accent-blue',
+  children,
 }: CardProps) => {
   return (
     <div
@@ -28,6 +31,7 @@ export const Card = ({
       <p className="text-text-sub text-sm leading-relaxed grow">
         {description}
       </p>
+      {children}
     </div>
   )
 }
