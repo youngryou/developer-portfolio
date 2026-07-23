@@ -42,9 +42,13 @@ INSERT INTO projects (
   ],
   -- images
   ARRAY[
-    '/projects/carrect-1.webp',
-    '/projects/carrect-2.webp',
-    '/projects/carrect-3.webp'
+    '/projects/carrect/carrect-1.webp',
+    '/projects/carrect/carrect-2.webp',
+    '/projects/carrect/carrect-3.webp',
+    '/projects/carrect/carrect-4.webp',
+    '/projects/carrect/carrect-5.webp',
+    '/projects/carrect/carrect-6.webp',
+    '/projects/carrect/carrect-7.webp'
   ],
   -- links
   '[
@@ -94,9 +98,11 @@ INSERT INTO projects (
   ],
   -- images
   ARRAY[
-    '/projects/syntax-sprint-1.webp',
-    '/projects/syntax-sprint-2.webp',
-    '/projects/syntax-sprint-3.webp'
+    '/projects/syntax_sprint/syntax_sprint-1.webp',
+    '/projects/syntax_sprint/syntax_sprint-2.webp',
+    '/projects/syntax_sprint/syntax_sprint-3.webp',
+    '/projects/syntax_sprint/syntax_sprint-4.webp',
+    '/projects/syntax_sprint/syntax_sprint-5.webp'
   ],
   -- links
   '[
