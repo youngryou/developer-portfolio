@@ -27,7 +27,7 @@ export const SkillsSection = () => {
     {
       title: 'Languages',
       color:
-        'bg-accent-yellow/10 text-amber-400 border-accent-yellow/30 hover:bg-accent-yellow/20',
+        'bg-accent-yellow/10 text-accent-yellow border-accent-yellow/30 hover:bg-accent-yellow/20',
       items: [
         { name: 'TypeScript', icon: <SiTypescript /> },
         { name: 'JavaScript', icon: <SiJavascript /> },
@@ -62,14 +62,14 @@ export const SkillsSection = () => {
     {
       title: 'Tools & Platforms',
       color:
-        'bg-accent-purple/10 text-purple-400 border-accent-purple/30 hover:bg-accent-purple/20',
+        'bg-accent-purple/10 text-accent-purple border-accent-purple/30 hover:bg-accent-purple/20',
       items: [
         { name: 'Git', icon: <SiGit /> },
         { name: 'GitHub', icon: <SiGithub /> },
         { name: 'Supabase', icon: <SiSupabase /> },
         { name: 'Clerk', icon: <SiClerk /> },
         { name: 'DigitalOcean', icon: <SiDigitalocean /> },
-        { name: 'WordPres1s', icon: <SiWordpress /> },
+        { name: 'WordPress', icon: <SiWordpress /> },
       ],
     },
   ]
