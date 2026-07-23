@@ -127,8 +127,12 @@ export default function ProjectModal({
                 <video
                   controls
                   className="w-full aspect-video"
-                  poster={project.images[0] ?? undefined}
+                  preload="metadata"
                 >
+                  <source
+                    src={project.demo_source.replace('.mp4', '.webm')}
+                    type="video/webm"
+                  />
                   <source src={project.demo_source} type="video/mp4" />
                   Your browser does not support the video tag.
                 </video>

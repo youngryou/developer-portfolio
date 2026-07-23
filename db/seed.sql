@@ -30,7 +30,7 @@ INSERT INTO projects (
   -- short_description
   'A reverse auction platform for the New Zealand vehicle repair market, allowing users to request and compare panel beating quotes.',
   -- demo_source
-  '/demo/carrect.mp4',
+  '/projects/carrect/carrect-demo.webm',
   -- category
   ARRAY['Full-Stack', 'Backend'],
   -- tech_stack
