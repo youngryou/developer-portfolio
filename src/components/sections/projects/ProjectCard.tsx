@@ -1,24 +1,32 @@
+import Image from 'next/image'
 import { Project } from '@/types/project'
 import { Badge } from '@/components/common/Badge'
 import { MdKeyboardDoubleArrowRight } from 'react-icons/md'
-
 interface ProjectCardProps {
   project: Project
+  onSelect: (project: Project) => void
 }
 
-export default function ProjectCard({ project }: ProjectCardProps) {
+export default function ProjectCard({ project, onSelect }: ProjectCardProps) {
   const thumbnail = project.images[0]
 
   return (
-    <button className="group text-left w-full bg-bg-editor border border-border-editor rounded-xl overflow-hidden transition-all duration-300 shadow-editor-card hover:-translate-y-1 hover:border-accent-green cursor-pointer">
-      <div className="aspect-video bg-bg-editor/80 overflow-hidden border-b border-border-editor">
+    <button
+      onClick={() => onSelect(project)}
+      className="group text-left w-full bg-bg-editor border border-border-editor rounded-xl overflow-hidden transition-all duration-300 shadow-editor-card hover:-translate-y-1 hover:border-accent-green cursor-pointer"
+    >
+      <div className="aspect-video relative bg-bg-editor/80 overflow-hidden border-b border-border-editor">
         {thumbnail ? (
-          // eslint-disable-next-line @next/next/no-img-element
-          <img
-            src={thumbnail}
-            alt={`${project.title} thumbnail`}
-            className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
-          />
+          <>
+            <Image
+              src={thumbnail}
+              alt={`${project.title} thumbnail`}
+              fill
+              unoptimized
+              className="object-cover transition-transform duration-300 group-hover:scale-105"
+            />
+            <div className="absolute inset-0 bg-accent-green opacity-20 mix-blend-multiply pointer-events-none transition-opacity duration-300 group-hover:opacity-0" />
+          </>
         ) : (
           <div className="w-full h-full flex items-center justify-center text-text-hint text-base">
             {project.title}
