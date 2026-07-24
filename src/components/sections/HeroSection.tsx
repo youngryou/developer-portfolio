@@ -62,8 +62,7 @@ export const HeroSection = () => {
           variant="outline"
           label="Contact Me"
           icon={TbMailFilled}
-          // onClick={}
-          // hoverColorClass="group-hover:text-accent-yellow"
+          href="#contact"
         />
       </div>
     </section>

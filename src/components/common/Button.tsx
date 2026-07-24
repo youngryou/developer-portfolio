@@ -5,6 +5,7 @@ interface ButtonProps {
   label: string
   icon?: IconType
   href?: string
+  target?: '_blank' | '_self' | '_parent' | '_top'
   onClick?: () => void
   hoverColorClass?: string
 }
@@ -14,11 +15,12 @@ export const Button = ({
   label,
   icon: Icon,
   href,
+  target,
   onClick,
   hoverColorClass = '',
 }: ButtonProps) => {
   const baseClass =
-    'group font-mono text-sm inline-flex items-center gap-2 rounded transition-all duration-300 transform select-none cursor-pointer'
+    'group font-mono text-sm inline-flex items-center gap-2 rounded-lg transition-all duration-300 transform select-none cursor-pointer'
 
   const variantClasses = {
     primary:
@@ -44,11 +46,14 @@ export const Button = ({
   )
 
   if (href) {
+    const isAnchor = href.startsWith('#')
+    const computedTarget = target ?? (isAnchor ? '_self' : '_blank')
+
     return (
       <a
         href={href}
-        target="_blank"
-        rel="noopener noreferrer"
+        target={computedTarget}
+        rel={computedTarget === '_blank' ? 'noopener noreferrer' : undefined}
         className={className}
       >
         {renderContent()}
