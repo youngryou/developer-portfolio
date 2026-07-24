@@ -3,7 +3,7 @@ import { IoInformationCircleOutline } from 'react-icons/io5'
 
 type CardProps = {
   title: string
-  description: string
+  description?: string
   icon?: ReactNode
   iconColor?: string
   hoverColor?: string
