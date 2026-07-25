@@ -58,7 +58,7 @@ export const HeroSection = () => {
             variant="primary"
             label="View My CV"
             icon={TbFileCvFilled}
-            href="https://youngryou.github.io/developer-resume/"
+            href="https://resume.youngryou.com/"
           />
           <Button
             variant="outline"
