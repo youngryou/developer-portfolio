@@ -16,6 +16,7 @@ const geistMono = Geist_Mono({
 })
 
 export const metadata: Metadata = {
+  metadataBase: new URL('https://youngryou.com'),
   title: 'Young Ryou | Full-Stack Developer',
   description:
     'Portfolio of Young Ryou, a Full-Stack Web Developer based in Auckland, New Zealand. View my latest projects and technical skills.',
