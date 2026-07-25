@@ -19,5 +19,5 @@ jobs:
             cd /var/www/portfolio
             git pull origin main
             npm ci
-            npm run build
+            NODE_OPTIONS="--max-old-space-size=1536" npm run build
             pm2 restart portfolio

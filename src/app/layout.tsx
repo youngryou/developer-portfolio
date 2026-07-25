@@ -16,8 +16,39 @@ const geistMono = Geist_Mono({
 })
 
 export const metadata: Metadata = {
-  title: 'Portfolio - Young Ryou | Full-Stack Developer',
-  description: 'My full-stack project portfolio.',
+  title: 'Young Ryou | Full-Stack Developer',
+  description:
+    'Portfolio of Young Ryou, a Full-Stack Web Developer based in Auckland, New Zealand. View my latest projects and technical skills.',
+  keywords: [
+    'Young Ryou',
+    'Full-Stack Developer',
+    'Web Developer',
+    'Auckland',
+    'TypeScript',
+    'React',
+    'Node.js',
+  ],
+  authors: [{ name: 'Young Ryou' }],
+  openGraph: {
+    title: 'Young Ryou | Developer Portfolio',
+    description:
+      'Portfolio of Young Ryou, a Full-Stack Web Developer based in Auckland, New Zealand.',
+    url: 'https://youngryou.com',
+    siteName: 'Young Ryou Portfolio',
+    images: [
+      {
+        url: '/page-thumbnail.webp',
+        width: 1200,
+        height: 630,
+        alt: 'Page Thumbnail',
+      },
+    ],
+    locale: 'en_NZ',
+    type: 'website',
+  },
+  icons: {
+    icon: '/favicon.svg',
+  },
 }
 
 export default function RootLayout({
