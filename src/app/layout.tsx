@@ -37,7 +37,7 @@ export const metadata: Metadata = {
     siteName: 'Young Ryou Portfolio',
     images: [
       {
-        url: '/page-thumbnail.webp',
+        url: '/page-thumbnail.png',
         width: 1200,
         height: 630,
         alt: 'Page Thumbnail',
