@@ -18,6 +18,9 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: 'Portfolio - Young Ryou | Full-Stack Developer',
   description: 'My full-stack project portfolio.',
+  icons: {
+    icon: '/favicon.svg',
+  },
 }
 
 export default function RootLayout({
