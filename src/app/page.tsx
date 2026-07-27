@@ -1,3 +1,5 @@
+import { Suspense } from 'react'
+
 import { HeroSection } from '@/components/sections/HeroSection'
 import { ProjectsSection } from '@/components/sections/projects/ProjectsSection'
 import { SkillsSection } from '@/components/sections/SkillsSection'
@@ -10,8 +12,26 @@ export default function Home() {
   return (
     <main>
       <HeroSection />
-      <StatsSection />
-      <ProjectsSection />
+      <Suspense
+        fallback={
+          <div className="h-96 flex items-center justify-center">
+            Loading Stats...
+          </div>
+        }
+      >
+        <StatsSection />
+      </Suspense>
+
+      <Suspense
+        fallback={
+          <div className="h-96 flex items-center justify-center">
+            Loading Projects...
+          </div>
+        }
+      >
+        <ProjectsSection />
+      </Suspense>
+
       <SkillsSection />
       <AboutSection />
       <ContactSection />
