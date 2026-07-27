@@ -128,19 +128,17 @@ export default function ProjectModal({
           {project.images.length > 0 && (
             <div className="mb-6 relative">
               {isLoading && (
-                <div className="w-full aspect-video rounded-lg border border-border-editor bg-bg-editor/80 flex flex-col items-center justify-center gap-3">
+                <div className="absolute inset-0 z-10 w-full aspect-video rounded-lg border border-border-editor bg-bg-editor/80 flex flex-col items-center justify-center gap-3">
                   <div className="w-6 h-6 border-2 border-accent-green border-t-transparent rounded-full animate-spin" />
                   <span className="text-xs text-text-hint font-mono">
                     Loading assets...
                   </span>
                 </div>
               )}
-              <div className={isLoading ? 'hidden' : 'block'}>
-                <ProjectImageSlider
-                  images={project.images}
-                  onLoad={onMediaLoaded}
-                />
-              </div>
+              <ProjectImageSlider
+                images={project.images}
+                onLoad={onMediaLoaded}
+              />
             </div>
           )}
 

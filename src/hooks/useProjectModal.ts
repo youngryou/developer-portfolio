@@ -12,6 +12,10 @@ export function useProjectModal() {
     setSelectedProject(project)
     setIsOpen(true)
     setIsMediaLoading(true)
+
+    setTimeout(() => {
+      setIsMediaLoading(false)
+    }, 500)
   }, [])
 
   const closeModal = useCallback(() => {
