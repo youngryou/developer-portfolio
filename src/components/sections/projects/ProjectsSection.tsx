@@ -1,3 +1,5 @@
+export const dynamic = 'force-dynamic'
+
 import { getAllProjects } from '@/lib/queries'
 import { Project } from '@/types/project'
 import { Card } from '@/components/common/Card'
