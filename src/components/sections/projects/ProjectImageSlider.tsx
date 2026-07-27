@@ -8,10 +8,12 @@ import { TbChevronLeft, TbChevronRight, TbX } from 'react-icons/tb'
 
 interface ProjectImageSliderProps {
   images: string[]
+  onLoad?: () => void
 }
 
 export default function ProjectImageSlider({
   images,
+  onLoad,
 }: ProjectImageSliderProps) {
   const [currentIndex, setCurrentIndex] = useState(0)
   const [isFullscreen, setIsFullscreen] = useState(false)
@@ -59,6 +61,7 @@ export default function ProjectImageSlider({
               <Image
                 src={img}
                 alt={`Project screenshot ${index + 1}`}
+                onLoad={index === 0 ? onLoad : undefined}
                 fill
                 unoptimized
                 className="object-cover cursor-pointer transition-transform duration-300 hover:scale-105"

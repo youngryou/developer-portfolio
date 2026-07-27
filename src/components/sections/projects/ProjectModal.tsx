@@ -14,6 +14,8 @@ import { BiCoinStack, BiDetail, BiLink, BiPlayCircle } from 'react-icons/bi'
 interface ProjectModalProps {
   project: Project
   isOpen: boolean
+  isLoading: boolean
+  onMediaLoaded: () => void
   onClose: () => void
 }
 
@@ -50,6 +52,8 @@ function getLinkIcon(labelName: string | null): LinkStyles {
 export default function ProjectModal({
   project,
   isOpen,
+  isLoading,
+  onMediaLoaded,
   onClose,
 }: ProjectModalProps) {
   const { dragX, isDragging, handlers } = useSwipe({
@@ -122,8 +126,21 @@ export default function ProjectModal({
           </p>
 
           {project.images.length > 0 && (
-            <div className="mb-6">
-              <ProjectImageSlider images={project.images} />
+            <div className="mb-6 relative">
+              {isLoading && (
+                <div className="w-full aspect-video rounded-lg border border-border-editor bg-bg-editor/80 flex flex-col items-center justify-center gap-3">
+                  <div className="w-6 h-6 border-2 border-accent-green border-t-transparent rounded-full animate-spin" />
+                  <span className="text-xs text-text-hint font-mono">
+                    Loading assets...
+                  </span>
+                </div>
+              )}
+              <div className={isLoading ? 'hidden' : 'block'}>
+                <ProjectImageSlider
+                  images={project.images}
+                  onLoad={onMediaLoaded}
+                />
+              </div>
             </div>
           )}
 
@@ -133,9 +150,15 @@ export default function ProjectModal({
                 <BiPlayCircle className="w-4 h-4 text-accent-green" />
                 Demo Video
               </h4>
-              <div className="rounded-lg overflow-hidden border border-border-editor bg-black/80">
+              <div className="rounded-lg overflow-hidden border border-border-editor bg-black/80 relative">
+                {isLoading && (
+                  <div className="absolute inset-0 z-10 flex items-center justify-center bg-bg-editor/80">
+                    <div className="w-6 h-6 border-2 border-accent-green border-t-transparent rounded-full animate-spin" />
+                  </div>
+                )}
                 <video
                   controls
+                  onLoadedData={onMediaLoaded}
                   className="w-full aspect-video"
                   preload="metadata"
                 >

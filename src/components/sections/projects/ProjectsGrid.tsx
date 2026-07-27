@@ -11,7 +11,14 @@ interface ProjectsGridProps {
 }
 
 export default function ProjectsGrid({ projects }: ProjectsGridProps) {
-  const { selectedProject, isOpen, openModal, closeModal } = useProjectModal()
+  const {
+    selectedProject,
+    isOpen,
+    isMediaLoading,
+    setIsMediaLoading,
+    openModal,
+    closeModal,
+  } = useProjectModal()
 
   if (projects.length === 0) {
     return (
@@ -39,6 +46,8 @@ export default function ProjectsGrid({ projects }: ProjectsGridProps) {
         <ProjectModal
           project={selectedProject}
           isOpen={isOpen}
+          isLoading={isMediaLoading}
+          onMediaLoaded={() => setIsMediaLoading(false)}
           onClose={closeModal}
         />
       )}
