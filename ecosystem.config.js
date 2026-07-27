@@ -4,6 +4,7 @@ module.exports = {
       name: 'portfolio',
       script: 'npm',
       args: 'start -- -p 3000',
+      env_file: '.env',
       env: {
         NODE_ENV: 'production',
       },
