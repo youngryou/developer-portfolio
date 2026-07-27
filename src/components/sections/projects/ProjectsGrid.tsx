@@ -2,6 +2,7 @@
 
 import { Project } from '@/types/project'
 import { useProjectModal } from '@/hooks/useProjectModal'
+import { ScrollReveal } from '@/components/common/ScrollReveal'
 import ProjectCard from './ProjectCard'
 import ProjectModal from './ProjectModal'
 
@@ -23,12 +24,14 @@ export default function ProjectsGrid({ projects }: ProjectsGridProps) {
   return (
     <>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        {projects.map((project) => (
-          <ProjectCard
+        {projects.map((project, projectIndex) => (
+          <ScrollReveal
             key={project.id}
-            project={project}
-            onSelect={openModal}
-          />
+            direction="left"
+            delay={projectIndex * 100}
+          >
+            <ProjectCard project={project} onSelect={openModal} />
+          </ScrollReveal>
         ))}
       </div>
 

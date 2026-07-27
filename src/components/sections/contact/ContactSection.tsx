@@ -1,5 +1,6 @@
 'use client'
 
+import { ScrollReveal } from '@/components/common/ScrollReveal'
 import { ContactForm } from './ContactForm'
 
 export const ContactSection = () => {
@@ -17,9 +18,11 @@ export const ContactSection = () => {
         </p>
       </div>
 
-      <div className="bg-bg-editor border border-border-editor rounded-xl p-6 sm:p-8 flex flex-col h-full shadow-editor-card">
-        <ContactForm />
-      </div>
+      <ScrollReveal delay={100}>
+        <div className="bg-bg-editor border border-border-editor rounded-xl p-6 sm:p-8 flex flex-col h-full shadow-editor-card">
+          <ContactForm />
+        </div>
+      </ScrollReveal>
     </section>
   )
 }
