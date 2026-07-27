@@ -11,7 +11,9 @@ export function useProjectModal() {
   const openModal = useCallback((project: Project) => {
     setSelectedProject(project)
     setIsOpen(true)
-    setIsMediaLoading(true)
+    requestAnimationFrame(() => {
+      setIsMediaLoading(true)
+    })
 
     setTimeout(() => {
       setIsMediaLoading(false)
