@@ -64,6 +64,8 @@ export default function ProjectImageSlider({
                 onLoad={index === 0 ? onLoad : undefined}
                 fill
                 unoptimized
+                priority={index === 0}
+                loading={index === 0 ? 'eager' : 'lazy'}
                 className="object-cover cursor-pointer transition-transform duration-300 hover:scale-105"
                 onClick={() => setIsFullscreen(true)}
               />
