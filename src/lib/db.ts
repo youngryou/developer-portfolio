@@ -20,6 +20,13 @@ if (process.env.NODE_ENV !== 'production') {
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const query = async (text: string, params?: any[]) => {
+  if (
+    process.env.NEXT_PHASE === 'phase-production-build' ||
+    !process.env.DB_HOST
+  ) {
+    return { rows: [], rowCount: 0 }
+  }
+
   const result = await pool.query(text, params)
   return result
 }
