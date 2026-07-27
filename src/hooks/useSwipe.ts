@@ -14,15 +14,25 @@ export const useSwipe = ({
   const [dragX, setDragX] = useState(0)
   const [isDragging, setIsDragging] = useState(false)
   const touchStartX = useRef<number | null>(null)
+  const touchStartY = useRef<number | null>(null)
 
   const onTouchStart = (e: React.TouchEvent) => {
     touchStartX.current = e.touches[0].clientX
+    touchStartY.current = e.touches[0].clientY
     setIsDragging(true)
   }
 
   const onTouchMove = (e: React.TouchEvent) => {
-    if (touchStartX.current === null) return
-    setDragX(e.touches[0].clientX - touchStartX.current)
+    if (touchStartX.current === null || touchStartY.current === null) return
+
+    const currentX = e.touches[0].clientX
+    const currentY = e.touches[0].clientY
+    const diffX = currentX - touchStartX.current
+    const diffY = currentY - touchStartY.current
+
+    if (Math.abs(diffY) > Math.abs(diffX)) return
+
+    setDragX(diffX)
   }
 
   const onTouchEnd = () => {
@@ -36,6 +46,7 @@ export const useSwipe = ({
     }
 
     touchStartX.current = null
+    touchStartY.current = null
     setDragX(0)
   }
 

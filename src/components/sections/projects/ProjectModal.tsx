@@ -5,6 +5,7 @@ import { IconType } from 'react-icons'
 import { Project } from '@/types/project'
 import { Button } from '@/components/common/Button'
 import { Badge } from '@/components/common/Badge'
+import { useSwipe } from '@/hooks/useSwipe'
 import ProjectImageSlider from './ProjectImageSlider'
 import { TbX, TbExternalLink, TbBrandGithubFilled } from 'react-icons/tb'
 import { PiGlobeSimple, PiGlobeSimpleX } from 'react-icons/pi'
@@ -51,6 +52,11 @@ export default function ProjectModal({
   isOpen,
   onClose,
 }: ProjectModalProps) {
+  const { dragX, isDragging, handlers } = useSwipe({
+    onSwipeLeft: () => {},
+    onSwipeRight: onClose,
+  })
+
   const handleKeyDown = useCallback(
     (e: KeyboardEvent) => {
       if (e.key === 'Escape') onClose()
@@ -79,9 +85,13 @@ export default function ProjectModal({
       />
 
       <div
-        className={`fixed top-0 right-0 z-70 h-full w-full max-w-3xl bg-bg-editor/80 border-l border-border-editor shadow-2xl transform transition-transform duration-300 ease-out overflow-y-auto scrollbar-thumb-accent-green scrollbar-thin ${
-          isOpen ? 'translate-x-0' : 'translate-x-full'
-        }`}
+        {...handlers}
+        className={`fixed top-0 right-0 z-70 h-full w-full max-w-3xl bg-bg-editor/80 border-l border-border-editor shadow-2xl overflow-y-auto scrollbar-thumb-accent-green scrollbar-thin touch-pan-y ${
+          isDragging ? '' : 'transition-transform duration-300 ease-out'
+        } ${isOpen ? 'translate-x-0' : 'translate-x-full'}`}
+        style={{
+          transform: isOpen ? `translateX(${Math.max(0, dragX)}px)` : undefined,
+        }}
       >
         <button
           onClick={onClose}

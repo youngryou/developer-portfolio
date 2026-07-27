@@ -43,6 +43,10 @@ export default function ProjectImageSlider({
       <div className="relative group w-full aspect-video rounded-lg overflow-hidden border border-border-editor bg-bg-editor/60 select-none touch-pan-y">
         <div
           {...handlers}
+          onTouchStart={(e) => {
+            e.stopPropagation()
+            handlers.onTouchStart(e)
+          }}
           className={`flex w-full h-full ${
             isDragging ? '' : 'transition-transform duration-300 ease-out'
           }`}
@@ -158,6 +162,10 @@ export default function ProjectImageSlider({
 
             <div
               {...handlers}
+              onTouchStart={(e) => {
+                e.stopPropagation()
+                handlers.onTouchStart(e)
+              }}
               className="w-full h-full flex items-center overflow-hidden touch-pan-y"
             >
               <div
