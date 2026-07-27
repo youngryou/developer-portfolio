@@ -2,8 +2,8 @@ module.exports = {
   apps: [
     {
       name: 'portfolio',
-      script: './node_modules/next/dist/bin/next',
-      args: 'start -- -p 3000',
+      script: 'npm',
+      args: 'start',
       env_file: '.env',
       env: {
         NODE_ENV: 'development',
