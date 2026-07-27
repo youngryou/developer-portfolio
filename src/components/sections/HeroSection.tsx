@@ -47,7 +47,7 @@ export const HeroSection = () => {
             <span className="text-accent-green">Young</span>.
           </h2>
 
-          <p className="text-lg md:text-xl max-w-3xl mx-auto text-text-sub leading-relaxed min-h-22 sm:min-h-16 md:min-h-10 px-12">
+          <p className="text-lg md:text-xl max-w-3xl mx-auto text-text-sub leading-relaxed min-h-22 sm:min-h-16 md:min-h-10 px-6">
             {currentText}
             <span className="animate-blink border-r-2 ml-1" />
           </p>
