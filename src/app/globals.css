@@ -70,21 +70,29 @@
 
 body {
   position: relative;
-
-  background-color: var(--bg-color);
-  background-image:
-    linear-gradient(to right, rgba(212, 212, 212, 0.02) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(212, 212, 212, 0.02) 1px, transparent 1px);
-  background-size: 40px 40px;
-  background-attachment: fixed;
   overflow-x: hidden;
 
   color: var(--text-color);
   font-family: var(--font-mono);
 }
 
-body::before {
-  content: '';
+.bg-fixed-layer {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  height: 100dvh;
+  z-index: -2;
+  background-color: var(--bg-color);
+  background-image:
+    linear-gradient(to right, rgba(212, 212, 212, 0.02) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(212, 212, 212, 0.02) 1px, transparent 1px);
+  background-size: 40px 40px;
+  pointer-events: none;
+  transform: translate3d(0, 0, 0);
+}
+
+.glow-spot-1 {
   position: fixed;
   top: 15%;
   left: 10%;
@@ -97,10 +105,12 @@ body::before {
   filter: blur(120px);
   pointer-events: none;
   z-index: -1;
+  will-change: transform;
+  transform: translate3d(0, 0, 0);
   animation: float-glow-1 25s ease-in-out infinite alternate;
 }
 
-body::after {
+.glow-spot-2 {
   content: '';
   position: fixed;
   bottom: 15%;
@@ -114,27 +124,30 @@ body::after {
   filter: blur(140px);
   pointer-events: none;
   z-index: -1;
+  will-change: transform;
+  transform: translate3d(0, 0, 0);
   animation: float-glow-2 30s ease-in-out infinite alternate;
 }
 
 @keyframes float-glow-1 {
   0% {
-    transform: translate(0, 0) scale(1);
+    transform: translate3d(0, 0, 0);
   }
   100% {
-    transform: translate(8vw, 5vh) scale(1.1);
+    transform: translate3d(8vw, 5vh, 0);
   }
 }
 
 @keyframes float-glow-2 {
   0% {
-    transform: translate(0, 0) scale(1.1);
+    transform: translate3d(0, 0, 0);
   }
   100% {
-    transform: translate(-6vw, -8vh) scale(0.9);
+    transform: translate3d(-6vw, -8vh, 0);
   }
 }
 
 html {
   scroll-behavior: smooth;
+  background-color: var(--bg-color);
 }
