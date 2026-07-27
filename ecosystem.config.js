@@ -6,6 +6,9 @@ module.exports = {
       args: 'start -- -p 3000',
       env_file: '.env',
       env: {
+        NODE_ENV: 'development',
+      },
+      env_production: {
         NODE_ENV: 'production',
       },
       autorestart: true,
