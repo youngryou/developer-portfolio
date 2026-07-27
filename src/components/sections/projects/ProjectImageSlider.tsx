@@ -1,22 +1,22 @@
 'use client'
 
 import Image from 'next/image'
-import { useState, useCallback, useRef } from 'react'
+import { useState, useCallback } from 'react'
 import { createPortal } from 'react-dom'
+import { useSwipe } from '@/hooks/useSwipe'
 import { TbChevronLeft, TbChevronRight, TbX } from 'react-icons/tb'
 
 interface ProjectImageSliderProps {
   images: string[]
+  onLoad?: () => void
 }
 
 export default function ProjectImageSlider({
   images,
+  onLoad,
 }: ProjectImageSliderProps) {
   const [currentIndex, setCurrentIndex] = useState(0)
   const [isFullscreen, setIsFullscreen] = useState(false)
-
-  const touchStartX = useRef<number | null>(null)
-  const touchEndX = useRef<number | null>(null)
 
   const goTo = useCallback(
     (index: number) => {
@@ -27,30 +27,10 @@ export default function ProjectImageSlider({
     [images.length],
   )
 
-  const handleTouchStart = (e: React.TouchEvent) => {
-    touchStartX.current = e.touches[0].clientX
-    touchEndX.current = e.touches[0].clientX
-  }
-
-  const handleTouchMove = (e: React.TouchEvent) => {
-    touchEndX.current = e.touches[0].clientX
-  }
-
-  const handleTouchEnd = () => {
-    if (!touchStartX.current || !touchEndX.current) return
-
-    const distance = touchStartX.current - touchEndX.current
-    const minSwipeDistance = 50
-
-    if (distance > minSwipeDistance) {
-      goTo(currentIndex + 1)
-    } else if (distance < -minSwipeDistance) {
-      goTo(currentIndex - 1)
-    }
-
-    touchStartX.current = null
-    touchEndX.current = null
-  }
+  const { dragX, isDragging, handlers } = useSwipe({
+    onSwipeLeft: () => goTo(currentIndex + 1),
+    onSwipeRight: () => goTo(currentIndex - 1),
+  })
 
   if (images.length === 0) {
     return (
@@ -60,24 +40,36 @@ export default function ProjectImageSlider({
     )
   }
 
-  const current = images[currentIndex]
-
   return (
     <>
-      <div
-        onTouchStart={handleTouchStart}
-        onTouchMove={handleTouchMove}
-        onTouchEnd={handleTouchEnd}
-        className="relative group w-full aspect-video rounded-lg overflow-hidden border border-border-editor bg-bg-editor/60 select-none touch-pan-y"
-      >
-        <Image
-          src={current}
-          alt={`Project screenshot ${currentIndex + 1}`}
-          fill
-          unoptimized
-          className="object-cover cursor-pointer transition-transform duration-300 hover:scale-105"
-          onClick={() => setIsFullscreen(true)}
-        />
+      <div className="relative group w-full aspect-video rounded-lg overflow-hidden border border-border-editor bg-bg-editor/60 select-none touch-pan-y">
+        <div
+          {...handlers}
+          onTouchStart={(e) => {
+            e.stopPropagation()
+            handlers.onTouchStart(e)
+          }}
+          className={`flex w-full h-full ${
+            isDragging ? '' : 'transition-transform duration-300 ease-out'
+          }`}
+          style={{
+            transform: `translateX(calc(-${currentIndex * 100}% + ${dragX}px))`,
+          }}
+        >
+          {images.map((img, index) => (
+            <div key={index} className="relative w-full h-full shrink-0">
+              <Image
+                src={img}
+                alt={`Project screenshot ${index + 1}`}
+                onLoad={index === 0 ? onLoad : undefined}
+                fill
+                unoptimized
+                className="object-cover cursor-pointer transition-transform duration-300 hover:scale-105"
+                onClick={() => setIsFullscreen(true)}
+              />
+            </div>
+          ))}
+        </div>
 
         {images.length > 1 && (
           <>
@@ -140,7 +132,7 @@ export default function ProjectImageSlider({
           >
             <button
               onClick={() => setIsFullscreen(false)}
-              className="absolute top-4 right-4 text-text-sub hover:text-text-editor hover:rotate-90 transition-all cursor-pointer"
+              className="absolute top-4 right-4 z-50 text-text-sub hover:text-text-editor hover:rotate-90 transition-all cursor-pointer"
               aria-label="Close fullscreen"
             >
               <TbX className="w-8 h-8" />
@@ -153,7 +145,7 @@ export default function ProjectImageSlider({
                     e.stopPropagation()
                     goTo(currentIndex - 1)
                   }}
-                  className="absolute left-4 top-1/2 -translate-y-1/2 bg-bg-editor/80 border border-border-editor rounded-full p-2 text-text-sub hover:text-text-editor transition-colors cursor-pointer"
+                  className="absolute left-4 top-1/2 -translate-y-1/2 z-50 bg-bg-editor/80 border border-border-editor rounded-full p-2 text-text-sub hover:text-text-editor transition-colors cursor-pointer"
                   aria-label="Previous image"
                 >
                   <TbChevronLeft className="w-8 h-8" />
@@ -163,7 +155,7 @@ export default function ProjectImageSlider({
                     e.stopPropagation()
                     goTo(currentIndex + 1)
                   }}
-                  className="absolute right-4 top-1/2 -translate-y-1/2 bg-bg-editor/80 border border-border-editor rounded-full p-2 text-text-sub hover:text-text-editor transition-colors cursor-pointer"
+                  className="absolute right-4 top-1/2 -translate-y-1/2 z-50 bg-bg-editor/80 border border-border-editor rounded-full p-2 text-text-sub hover:text-text-editor transition-colors cursor-pointer"
                   aria-label="Next image"
                 >
                   <TbChevronRight className="w-8 h-8" />
@@ -171,16 +163,34 @@ export default function ProjectImageSlider({
               </>
             )}
 
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
-              src={current}
-              alt={`Project screenshot ${currentIndex + 1}`}
-              onTouchStart={handleTouchStart}
-              onTouchMove={handleTouchMove}
-              onTouchEnd={handleTouchEnd}
-              className="max-w-full max-h-full object-contain rounded-lg select-none touch-pan-y"
-              onClick={(e) => e.stopPropagation()}
-            />
+            <div
+              {...handlers}
+              onTouchStart={(e) => {
+                e.stopPropagation()
+                handlers.onTouchStart(e)
+              }}
+              className="w-full h-full flex items-center overflow-hidden touch-pan-y"
+            >
+              <div
+                className={`flex w-full h-full items-center ${
+                  isDragging ? '' : 'transition-transform duration-300 ease-out'
+                }`}
+                style={{
+                  transform: `translateX(calc(-${currentIndex * 100}% + ${dragX}px))`,
+                }}
+              >
+                {images.map((img, index) => (
+                  /* eslint-disable-next-line @next/next/no-img-element */
+                  <img
+                    key={index}
+                    src={img}
+                    alt={`Project screenshot ${index + 1}`}
+                    className="w-full h-full object-contain shrink-0 select-none"
+                    onClick={(e) => e.stopPropagation()}
+                  />
+                ))}
+              </div>
+            </div>
 
             {images.length > 1 && (
               <span className="absolute bottom-4 left-1/2 -translate-x-1/2 bg-bg-editor border border-border-editor rounded-full px-3 py-1 text-sm text-text-editor">

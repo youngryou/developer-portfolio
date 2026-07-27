@@ -5,6 +5,7 @@ import { IconType } from 'react-icons'
 import { Project } from '@/types/project'
 import { Button } from '@/components/common/Button'
 import { Badge } from '@/components/common/Badge'
+import { useSwipe } from '@/hooks/useSwipe'
 import ProjectImageSlider from './ProjectImageSlider'
 import { TbX, TbExternalLink, TbBrandGithubFilled } from 'react-icons/tb'
 import { PiGlobeSimple, PiGlobeSimpleX } from 'react-icons/pi'
@@ -13,6 +14,8 @@ import { BiCoinStack, BiDetail, BiLink, BiPlayCircle } from 'react-icons/bi'
 interface ProjectModalProps {
   project: Project
   isOpen: boolean
+  isLoading: boolean
+  onMediaLoaded: () => void
   onClose: () => void
 }
 
@@ -49,8 +52,15 @@ function getLinkIcon(labelName: string | null): LinkStyles {
 export default function ProjectModal({
   project,
   isOpen,
+  isLoading,
+  onMediaLoaded,
   onClose,
 }: ProjectModalProps) {
+  const { dragX, isDragging, handlers } = useSwipe({
+    onSwipeLeft: () => {},
+    onSwipeRight: onClose,
+  })
+
   const handleKeyDown = useCallback(
     (e: KeyboardEvent) => {
       if (e.key === 'Escape') onClose()
@@ -79,9 +89,13 @@ export default function ProjectModal({
       />
 
       <div
-        className={`fixed top-0 right-0 z-70 h-full w-full max-w-3xl bg-bg-editor/80 border-l border-border-editor shadow-2xl transform transition-transform duration-300 ease-out overflow-y-auto scrollbar-thumb-accent-green scrollbar-thin ${
-          isOpen ? 'translate-x-0' : 'translate-x-full'
-        }`}
+        {...handlers}
+        className={`fixed top-0 right-0 z-70 h-full w-full max-w-3xl bg-bg-editor/80 border-l border-border-editor shadow-2xl overflow-y-auto scrollbar-thumb-accent-green scrollbar-thin touch-pan-y ${
+          isDragging ? '' : 'transition-transform duration-300 ease-out'
+        } ${isOpen ? 'translate-x-0' : 'translate-x-full'}`}
+        style={{
+          transform: isOpen ? `translateX(${Math.max(0, dragX)}px)` : undefined,
+        }}
       >
         <button
           onClick={onClose}
@@ -112,8 +126,21 @@ export default function ProjectModal({
           </p>
 
           {project.images.length > 0 && (
-            <div className="mb-6">
-              <ProjectImageSlider images={project.images} />
+            <div className="mb-6 relative">
+              {isLoading && (
+                <div className="w-full aspect-video rounded-lg border border-border-editor bg-bg-editor/80 flex flex-col items-center justify-center gap-3">
+                  <div className="w-6 h-6 border-2 border-accent-green border-t-transparent rounded-full animate-spin" />
+                  <span className="text-xs text-text-hint font-mono">
+                    Loading assets...
+                  </span>
+                </div>
+              )}
+              <div className={isLoading ? 'hidden' : 'block'}>
+                <ProjectImageSlider
+                  images={project.images}
+                  onLoad={onMediaLoaded}
+                />
+              </div>
             </div>
           )}
 
@@ -123,9 +150,15 @@ export default function ProjectModal({
                 <BiPlayCircle className="w-4 h-4 text-accent-green" />
                 Demo Video
               </h4>
-              <div className="rounded-lg overflow-hidden border border-border-editor bg-black/80">
+              <div className="rounded-lg overflow-hidden border border-border-editor bg-black/80 relative">
+                {isLoading && (
+                  <div className="absolute inset-0 z-10 flex items-center justify-center bg-bg-editor/80">
+                    <div className="w-6 h-6 border-2 border-accent-green border-t-transparent rounded-full animate-spin" />
+                  </div>
+                )}
                 <video
                   controls
+                  onLoadedData={onMediaLoaded}
                   className="w-full aspect-video"
                   preload="metadata"
                 >

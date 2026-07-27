@@ -1,4 +1,5 @@
 import { Badge } from '../common/Badge'
+import { ScrollReveal } from '../common/ScrollReveal'
 import {
   SiJavascript,
   SiTypescript,
@@ -89,13 +90,15 @@ export const SkillsSection = () => {
                 {category.title}
               </h3>
               <ul className="flex flex-wrap gap-3">
-                {category.items.map((skill) => (
+                {category.items.map((skill, badgeIndex) => (
                   <li key={skill.name}>
-                    <Badge
-                      label={skill.name}
-                      icon={skill.icon}
-                      color={category.color}
-                    />
+                    <ScrollReveal direction="left" delay={badgeIndex * 100}>
+                      <Badge
+                        label={skill.name}
+                        icon={skill.icon}
+                        color={category.color}
+                      />
+                    </ScrollReveal>
                   </li>
                 ))}
               </ul>

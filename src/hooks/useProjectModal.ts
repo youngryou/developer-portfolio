@@ -6,20 +6,27 @@ import { Project } from '@/types/project'
 export function useProjectModal() {
   const [selectedProject, setSelectedProject] = useState<Project | null>(null)
   const [isOpen, setIsOpen] = useState(false)
+  const [isMediaLoading, setIsMediaLoading] = useState(false)
 
   const openModal = useCallback((project: Project) => {
     setSelectedProject(project)
     setIsOpen(true)
+    setIsMediaLoading(true)
   }, [])
 
   const closeModal = useCallback(() => {
     setIsOpen(false)
-    setTimeout(() => setSelectedProject(null), 300)
+    setTimeout(() => {
+      setSelectedProject(null)
+      setIsMediaLoading(false)
+    }, 300)
   }, [])
 
   return {
     selectedProject,
     isOpen,
+    isMediaLoading,
+    setIsMediaLoading,
     openModal,
     closeModal,
   }
