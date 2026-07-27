@@ -1,5 +1,7 @@
 import { getGithubStats } from '@/lib/github'
 import { StatCard } from './StatCard'
+import { StatGraph } from './StatGraph'
+import { ScrollReveal } from '@/components/common/ScrollReveal'
 import { Card } from '@/components/common/Card'
 import {
   VscRepo,
@@ -14,6 +16,37 @@ export const StatsSection = async () => {
 
   if (!stats) return null
 
+  const statItems = [
+    {
+      title: 'Total Contributions',
+      value: stats.totalContributions,
+      icon: <VscFlame />,
+      iconColor: 'text-accent-red',
+      hoverColor: 'group hover:border-accent-red',
+    },
+    {
+      title: 'Projects',
+      value: stats.contributedRepos,
+      icon: <VscRepo />,
+      iconColor: 'text-accent-yellow',
+      hoverColor: 'group hover:border-accent-yellow',
+    },
+    {
+      title: 'Pull Requests',
+      value: stats.pullRequests,
+      icon: <VscGitPullRequest />,
+      iconColor: 'text-accent-green',
+      hoverColor: 'group hover:border-accent-green',
+    },
+    {
+      title: 'Commits (This Year)',
+      value: stats.totalCommits,
+      icon: <VscGitCommit />,
+      iconColor: 'text-accent-blue',
+      hoverColor: 'group hover:border-accent-blue',
+    },
+  ]
+
   return (
     <section id="stats" className="py-18 md:py-24">
       <div className="max-w-5xl mx-auto px-6 md:px-8">
@@ -27,76 +60,32 @@ export const StatsSection = async () => {
         </div>
 
         <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-12">
-          <StatCard
-            title="Total Contributions"
-            value={stats.totalContributions}
-            icon={<VscFlame />}
-            iconColor="text-accent-red"
-            hoverColor="group hover:border-accent-red"
-          />
-          <StatCard
-            title="Projects"
-            value={stats.contributedRepos}
-            icon={<VscRepo />}
-            iconColor="text-accent-yellow"
-            hoverColor="group hover:border-accent-yellow"
-          />
-          <StatCard
-            title="Pull Requests"
-            value={stats.pullRequests}
-            icon={<VscGitPullRequest />}
-            iconColor="text-accent-green"
-            hoverColor="group hover:border-accent-green"
-          />
-          <StatCard
-            title="Commits (This Year)"
-            value={stats.totalCommits}
-            icon={<VscGitCommit />}
-            iconColor="text-accent-blue"
-            hoverColor="group hover:border-accent-blue"
-          />
+          {statItems.map((item, statIndex) => (
+            <ScrollReveal
+              key={item.title}
+              direction="left"
+              delay={statIndex * 100}
+            >
+              <StatCard {...item} />
+            </ScrollReveal>
+          ))}
         </div>
 
-        <Card
-          key="top-languages"
-          title="Top Languages"
-          icon={<VscCode />}
-          iconColor="text-accent-purple"
-          hoverColor="group hover:border-accent-purple"
-        >
-          <div className="flex h-3 w-full rounded-full overflow-hidden mb-6 bg-bg-editor">
-            {stats.topLanguages.map((lang) => (
-              <div
-                key={lang.name}
-                style={{
-                  width: `${lang.percentage}%`,
-                  backgroundColor: lang.color,
-                }}
-                className="h-full transition-all duration-500 ease-in-out"
-                title={`${lang.name} ${lang.percentage}%`}
-              />
-            ))}
-          </div>
+        <ScrollReveal delay={100}>
+          <Card
+            key="top-languages"
+            title="Top Languages"
+            icon={<VscCode />}
+            iconColor="text-accent-purple"
+            hoverColor="group hover:border-accent-purple"
+          >
+            <StatGraph languages={stats.topLanguages} />
+          </Card>
 
-          <div className="flex flex-wrap gap-x-6 gap-y-3 text-sm md:text-base">
-            {stats.topLanguages.map((lang) => (
-              <div key={lang.name} className="flex items-center gap-2">
-                <span
-                  className="w-3 h-3 rounded-full"
-                  style={{ backgroundColor: lang.color }}
-                />
-                <span className="text-text-editor font-semibold">
-                  {lang.name}
-                </span>
-                <span className="text-text-hint">{lang.percentage}%</span>
-              </div>
-            ))}
-          </div>
-        </Card>
-
-        <p className="mt-6 text-right text-xs sm:text-sm italic text-text-hint">
-          * Data fetched via GitHub GraphQL API
-        </p>
+          <p className="mt-6 text-right text-xs sm:text-sm italic text-text-hint">
+            * Data fetched via GitHub GraphQL API
+          </p>
+        </ScrollReveal>
       </div>
     </section>
   )
