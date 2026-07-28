@@ -70,6 +70,8 @@ export const ContactForm = () => {
       if (response.ok) {
         setStatus('success')
         setFormData({ name: '', email: '', message: '', website: '' })
+
+        window.dispatchEvent(new Event('refresh_site_stats'))
       } else {
         setStatus('error')
       }

@@ -1,5 +1,10 @@
 TRUNCATE TABLE projects RESTART IDENTITY;
 
+-- Initialise Global Stats
+INSERT INTO global_stats (id, total_visitors, total_likes, contact_count) 
+VALUES (1, 0, 0, 0) 
+ON CONFLICT (id) DO NOTHING;
+
 -- ============================================================
 -- PROJECT: Carrect
 -- ============================================================

@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server'
 import { Resend } from 'resend'
+import { incrementContactCount } from '@/lib/queries'
 
 const resend = new Resend(process.env.RESEND_API_KEY)
 
@@ -22,6 +23,8 @@ export async function POST(request: Request) {
       text: `Name: ${name}\nEmail: ${email}\n\nMessage:\n${message}`,
       replyTo: email,
     })
+
+    await incrementContactCount()
 
     return NextResponse.json({ success: true, data }, { status: 200 })
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
