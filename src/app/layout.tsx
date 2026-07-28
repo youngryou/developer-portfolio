@@ -3,6 +3,7 @@ import './globals.css'
 
 import { Header } from '@/components/layout/Header'
 import { Footer } from '@/components/layout/Footer'
+import { Providers } from '@/context/Providers'
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://youngryou.com'),
@@ -52,9 +53,11 @@ export default function RootLayout({
         <div className="bg-fixed-layer" />
         <div className="glow-spot-1" />
         <div className="glow-spot-2" />
-        <Header />
-        <main className="flex-1 flex flex-col">{children}</main>
-        <Footer />
+        <Providers>
+          <Header />
+          <main className="flex-1 flex flex-col">{children}</main>
+          <Footer />
+        </Providers>
       </body>
     </html>
   )
