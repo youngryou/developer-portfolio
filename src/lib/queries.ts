@@ -1,6 +1,9 @@
 import { Project } from '@/types/project'
 import { query } from './db'
 
+// ============================================================
+// PROJECTS
+// ============================================================
 export async function getAllProjects(): Promise<Project[]> {
   const projectsResult = await query(
     'SELECT * FROM projects ORDER BY sort_order ASC',
@@ -55,6 +58,9 @@ export async function getProjectById(id: number): Promise<Project | null> {
   }
 }
 
+// ============================================================
+// SITE STATS
+// ============================================================
 export async function getSiteStats() {
   const globalResult = await query('SELECT * FROM global_stats WHERE id = 1')
   const dailyResult = await query(
@@ -66,6 +72,9 @@ export async function getSiteStats() {
     totalLikes: globalResult.rows[0]?.total_likes || 0,
     contactCount: globalResult.rows[0]?.contact_count || 0,
     todayVisitors: dailyResult.rows[0]?.visitors_count || 0,
+    cvClicks: globalResult.rows[0]?.cv_clicks || 0,
+    githubClicks: globalResult.rows[0]?.github_clicks || 0,
+    linkedinClicks: globalResult.rows[0]?.linkedin_clicks || 0,
   }
 }
 
@@ -91,4 +100,10 @@ export async function incrementContactCount() {
   await query(
     'UPDATE global_stats SET contact_count = contact_count + 1 WHERE id = 1',
   )
+}
+
+export async function incrementClick(
+  column: 'cv_clicks' | 'github_clicks' | 'linkedin_clicks',
+) {
+  await query(`UPDATE global_stats SET ${column} = ${column} + 1 WHERE id = 1`)
 }
