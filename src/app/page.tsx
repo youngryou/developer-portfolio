@@ -9,7 +9,7 @@ import { SkillsSection } from '@/components/sections/SkillsSection'
 import { AboutSection } from '@/components/sections/AboutSection'
 import { ContactSection } from '@/components/sections/contact/ContactSection'
 import { SiteStatsButton } from '@/components/layout/SiteStatsButton'
-import BackToTopButton from '@/components/common/BackToTopButton'
+import BackToTopButton from '@/components/layout/BackToTopButton'
 
 export default function Home() {
   return (
