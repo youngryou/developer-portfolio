@@ -33,7 +33,7 @@ jobs:
           host: ${{ secrets.DO_HOST }}
           username: ${{ secrets.DO_USERNAME }}
           key: ${{ secrets.DO_SSH_KEY }}
-          source: ".next,public,package.json,package-lock.json,ecosystem.config.js"
+          source: ".next,public,package.json,package-lock.json,ecosystem.config.js,src,db"
           target: "/var/www/portfolio"
 
       - name: SSH and Deploy to Droplet
