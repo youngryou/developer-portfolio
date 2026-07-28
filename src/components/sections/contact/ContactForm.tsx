@@ -14,6 +14,7 @@ export const ContactForm = () => {
     name: '',
     email: '',
     message: '',
+    website: '',
   })
   const [errors, setErrors] = useState({
     name: '',
@@ -68,7 +69,7 @@ export const ContactForm = () => {
 
       if (response.ok) {
         setStatus('success')
-        setFormData({ name: '', email: '', message: '' })
+        setFormData({ name: '', email: '', message: '', website: '' })
       } else {
         setStatus('error')
       }
@@ -79,7 +80,7 @@ export const ContactForm = () => {
 
   if (status === 'success') {
     return (
-      <div className="text-center py-8">
+      <div className="text-center pt-8 pb-4">
         <LuCircleCheckBig className="text-4xl sm:text-5xl text-accent-green mx-auto mb-4" />
         <h3 className="text-xl sm:text-2xl font-semibold text-accent-yellow mb-4">
           Message Sent!
@@ -102,6 +103,17 @@ export const ContactForm = () => {
 
   return (
     <form onSubmit={handleSubmit} noValidate className="flex flex-col gap-6">
+      <div className="hidden" aria-hidden="true">
+        <input
+          type="text"
+          name="website"
+          value={formData.website}
+          onChange={handleChange}
+          tabIndex={-1}
+          autoComplete="off"
+        />
+      </div>
+
       <Input
         id="name"
         name="name"

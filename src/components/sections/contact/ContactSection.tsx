@@ -21,6 +21,20 @@ export const ContactSection = () => {
       <ScrollReveal delay={100}>
         <div className="bg-bg-editor border border-border-editor rounded-xl p-6 sm:p-8 flex flex-col h-full shadow-editor-card">
           <ContactForm />
+
+          <div className="mt-8 text-center text-sm text-text-sub">
+            <span className="block sm:inline">
+              Or drop an email directly at{' '}
+            </span>
+            <a
+              href="mailto:contact@youngryou.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-accent-green hover:underline font-medium transition-colors"
+            >
+              contact@youngryou.com
+            </a>
+          </div>
         </div>
       </ScrollReveal>
     </section>
