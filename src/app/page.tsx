@@ -9,6 +9,7 @@ import { AboutSection } from '@/components/sections/AboutSection'
 import { ContactSection } from '@/components/sections/contact/ContactSection'
 import BackToTopButton from '@/components/common/BackToTopButton'
 import { StatsSection } from '@/components/sections/stats/StatsSection'
+import { SiteStatsSection } from '@/components/sections/SiteStatsSection'
 
 export default function Home() {
   return (
@@ -37,6 +38,7 @@ export default function Home() {
       <SkillsSection />
       <AboutSection />
       <ContactSection />
+      <SiteStatsSection />
       <BackToTopButton />
     </main>
   )
