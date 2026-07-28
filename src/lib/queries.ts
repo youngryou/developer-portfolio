@@ -54,3 +54,41 @@ export async function getProjectById(id: number): Promise<Project | null> {
     updated_at: row.updated_at,
   }
 }
+
+export async function getSiteStats() {
+  const globalResult = await query('SELECT * FROM global_stats WHERE id = 1')
+  const dailyResult = await query(
+    'SELECT visitors_count FROM daily_visitors WHERE visit_date = CURRENT_DATE',
+  )
+
+  return {
+    totalVisitors: globalResult.rows[0]?.total_visitors || 0,
+    totalLikes: globalResult.rows[0]?.total_likes || 0,
+    contactCount: globalResult.rows[0]?.contact_count || 0,
+    todayVisitors: dailyResult.rows[0]?.visitors_count || 0,
+  }
+}
+
+export async function incrementVisit() {
+  await query(
+    'UPDATE global_stats SET total_visitors = total_visitors + 1 WHERE id = 1',
+  )
+  await query(`
+    INSERT INTO daily_visitors (visit_date, visitors_count) 
+    VALUES (CURRENT_DATE, 1) 
+    ON CONFLICT (visit_date) 
+    DO UPDATE SET visitors_count = daily_visitors.visitors_count + 1
+  `)
+}
+
+export async function incrementLike() {
+  await query(
+    'UPDATE global_stats SET total_likes = total_likes + 1 WHERE id = 1',
+  )
+}
+
+export async function incrementContactCount() {
+  await query(
+    'UPDATE global_stats SET contact_count = contact_count + 1 WHERE id = 1',
+  )
+}
