@@ -5,6 +5,7 @@ import { Button } from '../common/Button'
 import { SocialGroup } from '../common/SocialGroup'
 import { TbFileCvFilled, TbMailFilled } from 'react-icons/tb'
 import { RiArrowDownWideLine } from 'react-icons/ri'
+import { useSiteStats } from '@/hooks/useSiteStats'
 
 const SEQUENCES = [
   'Full-Stack Developer engineering the entire application.',
@@ -14,6 +15,7 @@ const SEQUENCES = [
 export const HeroSection = () => {
   const [currentText, setCurrentText] = useState('')
   const [sequenceIndex, setSequenceIndex] = useState(0)
+  const { trackAction } = useSiteStats()
 
   useEffect(() => {
     const fullText = SEQUENCES[sequenceIndex]
@@ -59,6 +61,7 @@ export const HeroSection = () => {
             label="View My CV"
             icon={TbFileCvFilled}
             href="https://resume.youngryou.com/"
+            onClick={() => trackAction('cv_click')}
           />
           <Button
             variant="outline"

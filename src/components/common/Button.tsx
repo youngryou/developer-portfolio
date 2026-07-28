@@ -52,6 +52,7 @@ export const Button = ({
     return (
       <a
         href={href}
+        onClick={onClick}
         target={computedTarget}
         rel={computedTarget === '_blank' ? 'noopener noreferrer' : undefined}
         className={className}

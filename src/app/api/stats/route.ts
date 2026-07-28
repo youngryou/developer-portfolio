@@ -1,5 +1,10 @@
 import { NextResponse } from 'next/server'
-import { getSiteStats, incrementVisit, incrementLike } from '@/lib/queries'
+import {
+  getSiteStats,
+  incrementVisit,
+  incrementLike,
+  incrementClick,
+} from '@/lib/queries'
 
 export async function GET() {
   try {
@@ -22,6 +27,12 @@ export async function POST(request: Request) {
       await incrementVisit()
     } else if (action === 'like') {
       await incrementLike()
+    } else if (action === 'cv_click') {
+      await incrementClick('cv_clicks')
+    } else if (action === 'github_click') {
+      await incrementClick('github_clicks')
+    } else if (action === 'linkedin_click') {
+      await incrementClick('linkedin_clicks')
     }
 
     const updatedStats = await getSiteStats()
