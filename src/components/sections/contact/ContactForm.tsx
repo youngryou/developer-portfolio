@@ -1,12 +1,14 @@
 'use client'
 
 import { useState } from 'react'
+import { useSiteStats } from '@/hooks/useSiteStats'
 import { Button } from '@/components/common/Button'
 import { Input } from '@/components/common/Input'
 import { Textarea } from '@/components/common/Textarea'
 import { LuCircleCheckBig, LuMailWarning, LuSend } from 'react-icons/lu'
 
 export const ContactForm = () => {
+  const { fetchStats } = useSiteStats()
   const [status, setStatus] = useState<
     'idle' | 'loading' | 'success' | 'error'
   >('idle')
@@ -71,7 +73,7 @@ export const ContactForm = () => {
         setStatus('success')
         setFormData({ name: '', email: '', message: '', website: '' })
 
-        window.dispatchEvent(new Event('refresh_site_stats'))
+        if (fetchStats) fetchStats()
       } else {
         setStatus('error')
       }
