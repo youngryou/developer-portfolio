@@ -18,30 +18,37 @@ export const StatsSection = async () => {
 
   const statItems = [
     {
-      title: 'Total Contributions',
+      title: 'Contributions (1Y)',
       value: stats.totalContributions,
+      description:
+        'Total GitHub interactions (commits, PRs, issues) in the last year.',
       icon: <VscFlame />,
       iconColor: 'text-accent-red',
       hoverColor: 'group hover:border-accent-red',
     },
     {
-      title: 'Projects',
-      value: stats.contributedRepos,
-      icon: <VscRepo />,
+      title: 'Code Commits (1Y)',
+      value: stats.totalCommits,
+      description: 'Number of code commits pushed in the last year.',
+      icon: <VscGitCommit />,
       iconColor: 'text-accent-yellow',
       hoverColor: 'group hover:border-accent-yellow',
     },
     {
-      title: 'Pull Requests',
-      value: stats.pullRequests,
-      icon: <VscGitPullRequest />,
+      title: 'Projects',
+      value: stats.totalProjects,
+      description:
+        'All projects I own or collaborate on (Public, Private, Org).',
+      icon: <VscRepo />,
       iconColor: 'text-accent-green',
       hoverColor: 'group hover:border-accent-green',
     },
     {
-      title: 'Commits (This Year)',
-      value: stats.totalCommits,
-      icon: <VscGitCommit />,
+      title: 'Issues & PRs',
+      value: stats.issuesAndPrs,
+      description:
+        'Total Pull Requests and Issues created (Collaboration index).',
+      icon: <VscGitPullRequest />,
       iconColor: 'text-accent-blue',
       hoverColor: 'group hover:border-accent-blue',
     },
@@ -65,8 +72,11 @@ export const StatsSection = async () => {
               key={item.title}
               direction="left"
               delay={statIndex * 100}
+              className="h-full"
             >
-              <StatCard {...item} />
+              <div title={item.description} className="cursor-help h-full">
+                <StatCard {...item} />
+              </div>
             </ScrollReveal>
           ))}
         </div>
