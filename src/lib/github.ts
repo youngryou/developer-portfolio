@@ -9,9 +9,9 @@ export interface LanguageStat {
 
 export interface GithubStats {
   totalContributions: number
-  contributedRepos: number
-  pullRequests: number
   totalCommits: number
+  totalProjects: number
+  issuesAndPrs: number
   topLanguages: LanguageStat[]
 }
 
@@ -30,14 +30,15 @@ export async function getGithubStats(): Promise<GithubStats | null> {
           }
           totalCommitContributions
         }
-        repositoriesContributedTo(first: 1, contributionTypes: [COMMIT, ISSUE, PULL_REQUEST, REPOSITORY]) {
-          totalCount
-        }
         pullRequests(first: 1) {
           totalCount
         }
-        repositories(first: 100, ownerAffiliations: OWNER, isFork: false, orderBy: {field: PUSHED_AT, direction: DESC}) {
-          nodes {
+        issues(first: 1) {
+          totalCount
+        }
+        repositories(first: 100, ownerAffiliations: [OWNER, ORGANIZATION_MEMBER, COLLABORATOR], isFork: false, orderBy: {field: PUSHED_AT, direction: DESC}) {
+          totalCount
+        nodes {
             languages(first: 10, orderBy: {field: SIZE, direction: DESC}) {
               edges {
                 size
@@ -109,9 +110,9 @@ export async function getGithubStats(): Promise<GithubStats | null> {
     return {
       totalContributions:
         user.contributionsCollection.contributionCalendar.totalContributions,
-      contributedRepos: user.repositoriesContributedTo.totalCount,
-      pullRequests: user.pullRequests.totalCount,
       totalCommits: user.contributionsCollection.totalCommitContributions,
+      totalProjects: user.repositories.totalCount,
+      issuesAndPrs: user.pullRequests.totalCount + user.issues.totalCount,
       topLanguages,
     }
   } catch (error) {
