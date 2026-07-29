@@ -20,6 +20,7 @@ interface SiteStatsContextType {
   trackAction: (
     action: 'cv_click' | 'github_click' | 'linkedin_click',
   ) => Promise<void>
+  fetchStats: () => Promise<void>
 }
 
 export const SiteStatsContext = createContext<SiteStatsContextType | undefined>(
@@ -31,37 +32,40 @@ export function SiteStatsProvider({ children }: { children: React.ReactNode }) {
   const [hasLiked, setHasLiked] = useState(false)
   const [isLoading, setIsLoading] = useState(true)
 
-  useEffect(() => {
-    const fetchStats = async () => {
-      const today = new Date().toISOString().split('T')[0]
-      const lastVisit = localStorage.getItem('site_last_visit')
-      const liked = localStorage.getItem('site_has_liked') === 'true'
+  const fetchStats = useCallback(async () => {
+    const today = new Date().toISOString().split('T')[0]
+    const lastVisit = localStorage.getItem('site_last_visit')
+    const liked = localStorage.getItem('site_has_liked') === 'true'
 
-      try {
-        if (lastVisit !== today) {
-          const res = await fetch('/api/stats', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ action: 'visit' }),
-          })
-          if (res.ok) {
-            localStorage.setItem('site_last_visit', today)
-            setStats(await res.json())
-          }
-        } else {
-          const res = await fetch('/api/stats')
-          if (res.ok) setStats(await res.json())
+    try {
+      if (lastVisit !== today) {
+        const res = await fetch('/api/stats', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ action: 'visit' }),
+        })
+        if (res.ok) {
+          localStorage.setItem('site_last_visit', today)
+          setStats(await res.json())
         }
-      } catch (error) {
-        console.error('Failed to initialise site stats:', error)
-      } finally {
-        if (liked) setHasLiked(true)
-        setIsLoading(false)
+      } else {
+        const res = await fetch('/api/stats')
+        if (res.ok) setStats(await res.json())
       }
+    } catch (error) {
+      console.error('Failed to initialise site stats:', error)
+    } finally {
+      if (liked) setHasLiked(true)
+      setIsLoading(false)
     }
-
-    fetchStats()
   }, [])
+
+  useEffect(() => {
+    const init = async () => {
+      await fetchStats()
+    }
+    init()
+  }, [fetchStats])
 
   const handleLike = useCallback(async () => {
     if (hasLiked) return
@@ -117,7 +121,14 @@ export function SiteStatsProvider({ children }: { children: React.ReactNode }) {
 
   return (
     <SiteStatsContext.Provider
-      value={{ stats, hasLiked, isLoading, handleLike, trackAction }}
+      value={{
+        stats,
+        hasLiked,
+        isLoading,
+        handleLike,
+        trackAction,
+        fetchStats,
+      }}
     >
       {children}
     </SiteStatsContext.Provider>
