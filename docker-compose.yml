@@ -18,7 +18,11 @@ services:
     container_name: portfolio-app
     restart: unless-stopped
     environment:
-      - DATABASE_URL=postgresql://portfolio_user:${DB_PASSWORD}@portfolio-db:5432/portfolio_db
+      - DB_USER=portfolio_user
+      - DB_HOST=portfolio-db
+      - DB_NAME=portfolio_db
+      - DB_PASSWORD=${DB_PASSWORD}
+      - DB_PORT=5432
       - RESEND_API_KEY=${RESEND_API_KEY}
       - GITHUB_TOKEN=${GITHUB_TOKEN}
       - GITHUB_USERNAME=${GITHUB_USERNAME}
