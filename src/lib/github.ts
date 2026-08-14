@@ -86,7 +86,7 @@ export async function getGithubStats(): Promise<GithubStats | null> {
       repo.languages.edges.forEach((edge: any) => {
         const { size, node } = edge
 
-        if (['HTML', 'CSS'].includes(node.name)) return
+        if (['HTML', 'CSS', 'Dockerfile'].includes(node.name)) return
         // if (node.name === 'HTML') return
 
         const currentSize = languageMap.get(node.name)?.size || 0
